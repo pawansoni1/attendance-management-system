@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+        .container { max-width: 900px; margin: 0 auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; margin-bottom: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #32424f; color: white; }
+        .btn { background: #32424f; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .btn-success { background: #28a745; }
+        .present { color: green; font-weight: bold; }
+        .absent { color: red; font-weight: bold; }
+        .form-box { background: white; padding: 20px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 30px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Attendance Dashboard - {{ date }}</h2>
+<a href="/history" style="display: inline-block; background: #32424f; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; font-weight: bold; margin-bottom: 20px;">View Attendance History</a>
+        
+        <!-- NAYA FORM: New Student Add karne ke liye -->
+        <div class="form-box">
+            <h3>Add New Student</h3>
+            <form action="/add_student" method="POST">
+                <div class="form-group">
+                    <label>Roll No / Student ID:</label>
+                    <input type="text" name="student_id" placeholder="e.g. 104" required>
+                </div>
+                <div class="form-group">
+                    <label>Student Name:</label>
+                    <input type="text" name="student_name" placeholder="e.g. Ashwin Kumar" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Student</button>
+            </form>
+        </div>
+
+        <!-- Attendance List -->
+        <form action="/mark" method="POST">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Name</th>
+                        <th>Current Status</th>
+                        <th>Mark Attendance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.id }}</td>
+                        <td>{{ student.name }}</td>
+                        <td class="{{ student.status.lower() }}">{{ student.status }}</td>
+                        <td>
+                            <input type="radio" name="{{ student.id }}" value="Present" {% if student.status == 'Present' %}checked{% endif %}> Present
+                            <input type="radio" name="{{ student.id }}" value="Absent" {% if student.status == 'Absent' %}checked{% endif %}> Absent
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn">Save Attendance</button>
+        </form>
+    </div>
+</body>

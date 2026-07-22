@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #32424f; color: white; }
+        .btn { background: #32424f; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 4px; }
+        .present { color: green; font-weight: bold; }
+        .absent { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Attendance Dashboard - {{ date }}</h2>
+    <form action="/mark" method="POST">
+        <table>
+            <thead>
+                <tr>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>Current Status</th>
+                    <th>Mark Attendance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.name }}</td>
+                    <td class="{{ student.status.lower() }}">{{ student.status }}</td>
+                    <td>
+                        <input type="radio" name="{{ student.id }}" value="Present" {% if student.status == 'Present' %}checked{% endif %}> Present
+                        <input type="radio" name="{{ student.id }}" value="Absent" {% if student.status == 'Absent' %}checked{% endif %}> Absent
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" class="btn">Save Attendance</button>
+    </form>
+</body>
+</html>
