@@ -4,25 +4,27 @@
     <meta charset="UTF-8">
     <title>Attendance History</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
-        .container { max-width: 900px; margin: 0 auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        body { font-family: Arial, sans-serif; margin: 30px; background: #f4f4f9; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
         th { background-color: #32424f; color: white; }
-        .btn { display: inline-block; background: #32424f; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; font-weight: bold; margin-bottom: 20px; }
+        .btn { background: #32424f; color: white; padding: 8px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; }
         .present { color: green; font-weight: bold; }
         .absent { color: red; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Attendance History Records</h2>
+        <h2>Attendance History Log</h2>
         <a href="/" class="btn">← Back to Dashboard</a>
         
         <table>
             <thead>
                 <tr>
                     <th>Date</th>
+                    <th>Day</th>
+                    <th>Time</th>
                     <th>Roll No</th>
                     <th>Name</th>
                     <th>Status</th>
@@ -34,11 +36,13 @@
                     <td>{{ row[0] }}</td>
                     <td>{{ row[1] }}</td>
                     <td>{{ row[2] }}</td>
-                    <td class="{{ row[3].lower() }}">{{ row[3] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                    <td class="{{ row[5].lower() }}">{{ row[5] }}</td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="4" style="text-align: center;">No history found. Mark some attendance first!</td>
+                    <td colspan="6" style="text-align: center;">No history found!</td>
                 </tr>
                 {% endfor %}
             </tbody>
